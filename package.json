@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "concat-stream": "^1.6.2",
+    "content-type": "^1.0.4",
+    "cookies": "^0.7.1",
+    "lru": "^3.1.0",
+    "random-bytes": "^1.0.0",
+    "swagger-ui-dist": "^3.18.1",
+    "ws": "^6.0.0"
+  }
+}

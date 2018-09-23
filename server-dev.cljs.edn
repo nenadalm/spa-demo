@@ -1,0 +1,9 @@
+^{:watch-dirs ["src/server"]}
+{:main app.core
+ :output-to "target/out/app.js"
+ :output-dir "target/out"
+ :target :nodejs
+ :optimizations :none
+ :pretty-print true
+ :source-map true
+ :source-map-timestamp true}
