@@ -13,11 +13,20 @@
    [cljs.spec.alpha :as s]
    [spec-tools.spec :as spec]
    [spec-tools.core :as st]
+   [phrase.alpha :as p]
    [app.config :as config]
    [spec-tools.swagger.core :as swagger-core]
    [app.routes.user :refer [routes] :rename {routes user-routes}]))
 
 (def swagger-ui (node/require "swagger-ui-dist"))
+
+(s/def :response.error.source/pointer string?)
+(s/def :response.error/source (s/keys :req-un [:response.error.source/pointer]))
+(s/def :response.error/code string?)
+(s/def :response/error (s/keys :req-un [:response.error/code
+                                        :response.error/source]))
+(s/def :response/errors (s/coll-of :response/error))
+(s/def :response/error-list (s/keys :req-un [:response/errors]))
 
 (defn sync-handler->async-handler
   "Converts sync ring handler into async one."
@@ -47,9 +56,28 @@
                                                  :keywordize? true
                                                  :open? false})))
 
+(defn request-coercion-error? [e]
+  (and (instance? ExceptionInfo e)
+       (= (-> e .-data :type) ::coercion/request-coercion)))
+
+(defn problem->error [problem]
+  (let [error (p/phrase {} problem)
+        path (str "/" (clojure.string/join "/" (map name (:path problem))))]
+    {:code error
+     :source {:pointer path}}))
+
+(defn phrase-errors [e]
+  (let [problems (-> e .-data :problems)]
+    (map problem->error problems)))
+
 (defn exception-middleware [handler]
   (fn [req res _]
-    (let [raise (fn [_] (res {:status 500}))]
+    (let [raise (fn [e]
+                  (prn e)
+                  (if (request-coercion-error? e)
+                    (res {:status 400
+                          :body (phrase-errors e)})
+                    (res {:status 500})))]
       (try
         (handler req res raise)
         (catch :default e
@@ -82,8 +110,8 @@
     ::coercion/extract-response-format extract-response-format
     :data {:compile coercion/compile-request-coercers
            :coercion reitit.coercion.spec/coercion
-           :middleware [exception-middleware
-                        rf/wrap-restful-format
+           :middleware [rf/wrap-restful-format
+                        exception-middleware
                         rcoercion/coerce-response-middleware
                         sync-exception-middleware ;; coerce-request-middleware can throw exception on invalid data
                         rcoercion/coerce-request-middleware]}}))

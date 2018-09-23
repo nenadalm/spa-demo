@@ -3,7 +3,8 @@
                  [org.clojure/clojurescript "1.10.339"]
                  [macchiato/core "0.2.14"]
                  [metosin/reitit "0.2.2"]
-                 [org.clojure/test.check "0.10.0-alpha2"]]
+                 [org.clojure/test.check "0.10.0-alpha2"]
+                 [phrase "0.3-alpha4"]]
   :profiles {:dev
              {:dependencies [[com.bhauman/figwheel-main "0.1.9"]]}}
   :source-paths ["src/server"]

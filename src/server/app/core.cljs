@@ -2,7 +2,8 @@
   (:require
    [spec-tools.core :as st]
    [macchiato.server :as http]
-   [app.routes :refer [handler]]))
+   [app.routes :refer [handler]]
+   [app.phrases]))
 
 ;; https://github.com/metosin/spec-tools/pull/130
 (extend-type st/Spec

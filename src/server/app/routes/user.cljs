@@ -32,13 +32,14 @@
                                              {:id 2
                                               :type :user
                                               :attributes {:name "Steve Smith"}}]}}))}
-            :post {:responses {200 {:body :response/user}}
+            :post {:responses {201 {:body :response/user}
+                               400 {:body :response/error-list}}
                    :parameters {:body :request/user-create}
                    :handler (fn [req res raise]
                               (res
                                {:status 201
                                 :headers {}
-                                :body (update-in (get-in req [:parameters :body])
-                                                 [:data :attributes]
-                                                 #(assoc % :id 3))}))}}])
+                                :body (update (get-in req [:parameters :body])
+                                              :data
+                                              #(assoc % :id 3))}))}}])
 
