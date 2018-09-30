@@ -2,8 +2,10 @@
   (:require
    [spec-tools.core :as st]
    [macchiato.server :as http]
+   [app.migrations :as migrations]
    [app.routes :refer [handler]]
-   [app.phrases]))
+   [app.phrases]
+   [app.config :refer [env]]))
 
 ;; https://github.com/metosin/spec-tools/pull/130
 (extend-type st/Spec
@@ -12,9 +14,14 @@
     (reduce-kv f init (into {} coll))))
 
 (defn server []
-  (http/start {:handler handler
-               :host "127.0.0.1"
-               :port "3000"
-               :on-success #(println "app started on 127.0.0.1:3000")}))
+  (migrations/migrate
+   (fn []
+     (let [config @env
+           host (:host config)
+           port (:port config)]
+       (http/start {:handler handler
+                    :host host
+                    :port port
+                    :on-success #(println (str "App started on " host ":" port))})))))
 
 (set! *main-cli-fn* server)

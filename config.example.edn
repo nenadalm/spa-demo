@@ -1,0 +1,3 @@
+{:db-connection-string "postgres://postgres:postgres@127.0.0.1/spa-demo"
+ :host "127.0.0.1"
+ :port 3000}

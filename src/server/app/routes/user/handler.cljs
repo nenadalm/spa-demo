@@ -1,6 +1,8 @@
-(ns app.routes.user
+(ns app.routes.user.handler
   (:require
-   [cljs.spec.alpha :as s]))
+   [cljs.spec.alpha :as s]
+   [app.db :as db]
+   [app.routes.user.query :as q]))
 
 (s/def :resource.user/id int?)
 (s/def :resource.user/type string?)
@@ -20,26 +22,32 @@
                                                   :resource.user/attributes]))
 (s/def :request/user-create (s/keys :req-un [:request.user-create/data]))
 
+(defn user-row->response-data [row]
+  {:id (:id row)
+   :type "user"
+   :attributes {:name (:name row)}})
+
 (def routes
   ["/user" {:get {:responses {200 {:body :response/user-list}}
                   :handler (fn [req res raise]
-                             (res
-                              {:status 200
-                               :headers {}
-                               :body {:data [{:id 1
-                                              :type :user
-                                              :attributes {:name "Stan Smith"}}
-                                             {:id 2
-                                              :type :user
-                                              :attributes {:name "Steve Smith"}}]}}))}
+                             (db/query
+                              (q/list)
+                              (fn [result]
+                                (res
+                                 {:status 200
+                                  :headers {}
+                                  :body {:data (map user-row->response-data
+                                                    result)}}))))}
             :post {:responses {201 {:body :response/user}
                                400 {:body :response/error-list}}
                    :parameters {:body :request/user-create}
                    :handler (fn [req res raise]
-                              (res
-                               {:status 201
-                                :headers {}
-                                :body (update (get-in req [:parameters :body])
-                                              :data
-                                              #(assoc % :id 3))}))}}])
-
+                              (db/query
+                               (q/create
+                                (get-in req [:parameters :body :data :attributes]))
+                               (fn [result]
+                                 (res
+                                  {:status 201
+                                   :headers {}
+                                   :body {:data (first (map user-row->response-data
+                                                            result))}}))))}}])

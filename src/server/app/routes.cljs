@@ -16,7 +16,7 @@
    [phrase.alpha :as p]
    [app.config :as config]
    [spec-tools.swagger.core :as swagger-core]
-   [app.routes.user :refer [routes] :rename {routes user-routes}]))
+   [app.routes.user.handler :refer [routes] :rename {routes user-routes}]))
 
 (def swagger-ui (node/require "swagger-ui-dist"))
 
