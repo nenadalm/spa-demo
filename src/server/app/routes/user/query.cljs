@@ -1,4 +1,5 @@
 (ns app.routes.user.query
+  (:refer-clojure :exclude [list])
   (:require
    [sqlingvo.core :as sql]))
 

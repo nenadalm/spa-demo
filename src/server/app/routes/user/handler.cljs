@@ -30,24 +30,20 @@
 (def routes
   ["/user" {:get {:responses {200 {:body :response/user-list}}
                   :handler (fn [req res raise]
-                             (db/query
-                              (q/list)
-                              (fn [result]
-                                (res
-                                 {:status 200
-                                  :headers {}
-                                  :body {:data (map user-row->response-data
-                                                    result)}}))))}
+                             (-> (db/query (q/list))
+                                 (.then (fn [result]
+                                          (res {:status 200
+                                                :headers {}
+                                                :body {:data (map user-row->response-data
+                                                                  result)}})))))}
             :post {:responses {201 {:body :response/user}
                                400 {:body :response/error-list}}
                    :parameters {:body :request/user-create}
                    :handler (fn [req res raise]
-                              (db/query
-                               (q/create
-                                (get-in req [:parameters :body :data :attributes]))
-                               (fn [result]
-                                 (res
-                                  {:status 201
-                                   :headers {}
-                                   :body {:data (first (map user-row->response-data
-                                                            result))}}))))}}])
+                              (-> (db/query (q/create (get-in req [:parameters :body :data :attributes])))
+                                  (.then (fn [result]
+                                           (res
+                                            {:status 201
+                                             :headers {}
+                                             :body {:data (first (map user-row->response-data
+                                                                      result))}})))))}}])

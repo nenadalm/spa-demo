@@ -37,6 +37,29 @@
   (str "{" (clojure.string.join "," coll) "}"))
 
 (defn query
-  "`q` is a function with `db` argument returning sqlingvo query. `f` is a function accepting result of the query `q`."
-  [q f]
-  (go (f (<!? (q db)))))
+  "`q` is a function with `db` argument returning sqlingvo query. Returns promise."
+  ([q]
+   (js/Promise.
+    (fn [resolve reject]
+      (go (try
+            (resolve (<!? (q db)))
+            (catch :default e
+              (reject e))))))))
+
+(defn transactional
+  "`f` is a function accepting `db`. All queries inside the function `f` runs in a transaction. Returns promise."
+  [f]
+  (js/Promise.
+   (fn [resolve reject]
+     (go (let [db (<? (sdb/connect db))
+               client (:connection db)]
+           (try
+             (.query client "BEGIN")
+             (let [res (f db)]
+               (.query client "COMMIT")
+               (sdb/disconnect db)
+               (resolve res))
+             (catch :default e
+               (.query client "ROLLBACK")
+               (sdb/disconnect db)
+               (reject e))))))))
