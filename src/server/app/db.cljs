@@ -1,13 +1,14 @@
 (ns app.db
   (:require
    [cljs.nodejs :as node]
-   [sqlingvo.core :as sql]
-   [sqlingvo.node.async :as sdb :refer-macros [<? <!?]]
+   [taoensso.timbre :refer-macros [error]]
    [app.config :refer [env]])
   (:require-macros
    [cljs.core.async.macros :refer [go]]))
 
 (def pg (node/require "pg"))
+(def Pool (.-Pool pg))
+(def pcs (node/require "pg-connection-string"))
 
 (def type-timestamp 1114)
 
@@ -20,46 +21,26 @@
                                                     (clojure.string/replace " " "T")
                                                     (clojure.string/replace #"\..*" "Z")))))
 
-(defn clj->db [s]
-  (clojure.string/replace (name s) "-" "_"))
+(def pool (Pool. (.parse pcs (:db-connection-string @env))))
+(.on pool "error" (fn [e _]
+                    (error "idle client error" e)))
 
-(defn db->clj [s]
-  (clojure.string/replace (name s) "_" "-"))
+(defn col->key [col]
+  (-> col
+      (clojure.string/replace "_" "-")
+      keyword))
 
-(def db (-> (sdb/db (:db-connection-string @env)
-                    {:sql-name clj->db
-                     :sql-identifier db->clj})
-            (sdb/start)))
-
-(defn pg-array
-  "Converts `coll` into postgres array."
-  [coll]
-  (str "{" (clojure.string.join "," coll) "}"))
+(defn convert-row [row]
+  (->> row
+       (.entries js/Object)
+       (map (fn [[k v]] [(col->key k) v]))
+       (into {})))
 
 (defn query
-  "`q` is a function with `db` argument returning sqlingvo query. Returns promise."
-  ([q]
-   (js/Promise.
-    (fn [resolve reject]
-      (go (try
-            (resolve (<!? (q db)))
-            (catch :default e
-              (reject e))))))))
-
-(defn transactional
-  "`f` is a function accepting `db`. All queries inside the function `f` runs in a transaction. Returns promise."
-  [f]
-  (js/Promise.
-   (fn [resolve reject]
-     (go (let [db (<? (sdb/connect db))
-               client (:connection db)]
-           (try
-             (.query client "BEGIN")
-             (let [res (f db)]
-               (.query client "COMMIT")
-               (sdb/disconnect db)
-               (resolve res))
-             (catch :default e
-               (.query client "ROLLBACK")
-               (sdb/disconnect db)
-               (reject e))))))))
+  "Executes query `q` with parameters `params`. Returns promise."
+  [[q & params]]
+  (-> (.query pool q (to-array params))
+      (.then (fn [res]
+               (into []
+                     (map convert-row)
+                     (.-rows res))))))

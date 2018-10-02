@@ -1,20 +1,20 @@
 (ns app.routes.user.query
   (:refer-clojure :exclude [list])
   (:require
-   [sqlingvo.core :as sql]))
+   [app.sql :as sql]
+   [app.db]
+   [app.db :as db]))
 
 (defn create [{:keys [name]}]
-  (fn [db]
-    (sql/insert
-        db
-        :user
-        [:name]
-      (sql/values [[name]])
-      (sql/returning :id :name))))
+  (-> (sql/build :insert-into :user
+                 :columns [:name]
+                 :values [[name]]
+                 :returning [:id :name])
+      sql/format
+      db/query))
 
 (defn list []
-  (fn [db]
-    (sql/select
-        db
-        [:id :name]
-      (sql/from :user))))
+  (-> (sql/build :select [:id :name]
+                 :from :user)
+      sql/format
+      db/query))

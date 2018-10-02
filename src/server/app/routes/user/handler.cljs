@@ -1,7 +1,6 @@
 (ns app.routes.user.handler
   (:require
    [cljs.spec.alpha :as s]
-   [app.db :as db]
    [app.routes.user.query :as q]))
 
 (s/def :resource.user/id int?)
@@ -30,7 +29,7 @@
 (def routes
   ["/user" {:get {:responses {200 {:body :response/user-list}}
                   :handler (fn [req res raise]
-                             (-> (db/query (q/list))
+                             (-> (q/list)
                                  (.then (fn [result]
                                           (res {:status 200
                                                 :headers {}
@@ -40,7 +39,7 @@
                                400 {:body :response/error-list}}
                    :parameters {:body :request/user-create}
                    :handler (fn [req res raise]
-                              (-> (db/query (q/create (get-in req [:parameters :body :data :attributes])))
+                              (-> (q/create (get-in req [:parameters :body :data :attributes]))
                                   (.then (fn [result]
                                            (res
                                             {:status 201
