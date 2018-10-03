@@ -18,4 +18,4 @@
            :cljfmt/check {
                           :main-opts ["-m" "cljfmt-runner.check"]}
            :cljfmt/fix {:main-opts ["-m" "cljfmt-runner.fix"]}
-           :server.build/dev {:main-opts ["-m" "figwheel.main" "-b" "server-dev"]}}}
+           :server.build/dev {:main-opts ["-m" "figwheel.main" "-b" "server-dev" "-r"]}}}
