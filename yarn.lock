@@ -2,6 +2,52 @@
 # yarn lockfile v1
 
 
+"@sentry/core@4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-4.0.6.tgz#8e59445dde27e639ffcac23b4e40529cda4c9df7"
+  dependencies:
+    "@sentry/hub" "4.0.6"
+    "@sentry/minimal" "4.0.6"
+    "@sentry/types" "4.0.6"
+    "@sentry/utils" "4.0.6"
+
+"@sentry/hub@4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-4.0.6.tgz#ab86bd50d12234a0699857452e925069311f54d1"
+  dependencies:
+    "@sentry/types" "4.0.6"
+    "@sentry/utils" "4.0.6"
+
+"@sentry/minimal@4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-4.0.6.tgz#494d725f2d7c343724c47bbb0cd99302b6124e7d"
+  dependencies:
+    "@sentry/hub" "4.0.6"
+    "@sentry/types" "4.0.6"
+
+"@sentry/node@^4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-4.0.6.tgz#8a3b9ab837f187a1bd3c490235c88f8ca18e3c7f"
+  dependencies:
+    "@sentry/core" "4.0.6"
+    "@sentry/hub" "4.0.6"
+    "@sentry/types" "4.0.6"
+    "@sentry/utils" "4.0.6"
+    cookie "0.3.1"
+    lsmod "1.0.0"
+    md5 "2.2.1"
+    stack-trace "0.0.10"
+
+"@sentry/types@4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-4.0.6.tgz#421478df17415802baa4d5e2d3db246e559a0fad"
+
+"@sentry/utils@4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-4.0.6.tgz#77ca73fb7d2c436914d2dd84fa975dd5b618246d"
+  dependencies:
+    "@sentry/types" "4.0.6"
+
 ansi-escape-sequences@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/ansi-escape-sequences/-/ansi-escape-sequences-4.0.0.tgz#e0ecb042958b71e42942d35c1fcf1d9b00a0f67e"
@@ -43,6 +89,10 @@ buffer-writer@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/buffer-writer/-/buffer-writer-1.0.1.tgz#22a936901e3029afcd7547eb4487ceb697a3bf08"
 
+charenc@~0.0.1:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
+
 command-line-args@^4.0.7:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/command-line-args/-/command-line-args-4.0.7.tgz#f8d1916ecb90e9e121eda6428e41300bfb64cc46"
@@ -77,6 +127,10 @@ content-type@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
 
+cookie@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
+
 cookies@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/cookies/-/cookies-0.7.1.tgz#7c8a615f5481c61ab9f16c833731bcb8f663b99b"
@@ -87,6 +141,10 @@ cookies@^0.7.1:
 core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
+
+crypt@~0.0.1:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
 
 deep-extend@~0.6.0:
   version "0.6.0"
@@ -129,6 +187,10 @@ inherits@2, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
+is-buffer@~1.1.1:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
+
 isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
@@ -146,6 +208,18 @@ lru@^3.1.0:
   resolved "https://registry.yarnpkg.com/lru/-/lru-3.1.0.tgz#ea7fb8546d83733396a13091d76cfeb4c06837d5"
   dependencies:
     inherits "^2.0.1"
+
+lsmod@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/lsmod/-/lsmod-1.0.0.tgz#9a00f76dca36eb23fa05350afe1b585d4299e64b"
+
+md5@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/md5/-/md5-2.2.1.tgz#53ab38d5fe3c8891ba465329ea23fac0540126f9"
+  dependencies:
+    charenc "~0.0.1"
+    crypt "~0.0.1"
+    is-buffer "~1.1.1"
 
 minimatch@^3.0.4:
   version "3.0.4"
@@ -276,6 +350,10 @@ split@^1.0.0:
   resolved "https://registry.yarnpkg.com/split/-/split-1.0.1.tgz#605bd9be303aa59fb35f9229fbea0ddec9ea07d9"
   dependencies:
     through "2"
+
+stack-trace@0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/stack-trace/-/stack-trace-0.0.10.tgz#547c70b347e8d32b4e108ea1a2a159e5fdde19c0"
 
 string_decoder@~1.1.1:
   version "1.1.1"

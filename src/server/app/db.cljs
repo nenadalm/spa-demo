@@ -21,7 +21,7 @@
 
 (def ^:private pool (Pool. (.parse pcs (:db-connection-string @env))))
 (.on pool "error" (fn [e _]
-                    (error "idle client error" e)))
+                    (error e "idle client error")))
 
 (defn- col->key [col]
   (-> col

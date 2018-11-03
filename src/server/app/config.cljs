@@ -10,9 +10,11 @@
 (s/def :app.config/db-connection-string string?)
 (s/def :app.config/host string?)
 (s/def :app.config/port int?)
-(s/def :app/config (s/keys :req-un [:config/db-connection-string
-                                    :config/host
-                                    :config/port]))
+(s/def :app.config/sentry-dsn string?)
+(s/def :app/config (s/keys :req-un [:app.config/db-connection-string
+                                    :app.config/host
+                                    :app.config/port
+                                    :app.config/sentry-dsn]))
 
 (defn load-config []
   (let [conf (config/env)]

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@sentry/node": "^4.0.6",
     "concat-stream": "^1.6.2",
     "content-type": "^1.0.4",
     "cookies": "^0.7.1",
