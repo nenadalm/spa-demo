@@ -1,0 +1,17 @@
+^{:open-url false}
+{:main app.core
+ :output-to "../resources/public/js/app.js"
+ :output-dir "../resources/public/js/compiled/app/out"
+ :asset-path "js/compiled/app/out"
+ :optimizations :none
+ :pretty-print true
+ :source-map true
+ :install-deps false
+ :npm-deps false
+ :source-map-timestamp true
+ :foreign-libs [{:file "target/bundle.js"
+                 :provides ["cljsjs.react" "cljsjs.react.dom" "react" "react-dom" "sentry"]
+                 :global-exports {react React
+                                  react-dom ReactDOM
+                                  sentry Sentry}}]
+ :externs ["externs/react.ext.js" "externs/react-dom.ext.js"]}
