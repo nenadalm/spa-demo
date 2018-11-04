@@ -14,5 +14,5 @@
    :max
    f
    (fn [e]
-     (error "Failed executing migrations." e)
+     (error e"Failed executing migrations.")
      (.exit node/process 1))))
