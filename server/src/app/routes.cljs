@@ -122,7 +122,7 @@
    (ring/routes
     (-> (ring/create-default-handler)
         (macchiato.middleware.resource/wrap-resource (.absolutePath swagger-ui))
-        (macchiato.middleware.resource/wrap-resource "resources/public")))))
+        (macchiato.middleware.resource/wrap-resource "../resources/public")))))
 
 (def handler (if config/debug?
                (fn [req res raise]

@@ -1,4 +1,5 @@
-^{:watch-dirs ["src/server"]
+^{:watch-dirs ["src"]
+  :open-url false
   :ring-server-options {:port 9501}}
 {:main app.core
  :output-to "target/out/app.js"

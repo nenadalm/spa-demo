@@ -1,4 +1,4 @@
-{:paths ["src/server"]
+{:paths ["src"]
  :deps {org.clojure/clojure {:mvn/version "1.9.0"}
         org.clojure/clojurescript {:mvn/version "1.10.339"}
         macchiato/core {:mvn/version "0.2.14"}
