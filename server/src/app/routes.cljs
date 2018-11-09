@@ -7,6 +7,7 @@
    [reitit.coercion.spec]
    [reitit.swagger :as swagger]
    [macchiato.middleware.resource]
+   [macchiato.middleware.params]
    [macchiato.util.response :as response]
    [macchiato.middleware.restful-format :as rf]
    [cljs.nodejs :as node]
@@ -16,7 +17,8 @@
    [phrase.alpha :as p]
    [app.config :as config]
    [spec-tools.swagger.core :as swagger-core]
-   [app.routes.user.handler :refer [routes] :rename {routes user-routes}]))
+   [app.routes.user.handler :refer [routes] :rename {routes user-routes}]
+   [app.routes.greeter.handler :refer [routes] :rename {routes greeter-routes}]))
 
 (def swagger-ui (node/require "swagger-ui-dist"))
 
@@ -103,7 +105,8 @@
                          (res {:status 200
                                :headers {"Content-Type" "application/javascript"}
                                :body (str "window.APP_CONFIG =" (.stringify js/JSON config))})))}}]
-    user-routes]
+    user-routes
+    greeter-routes]
 
    {::coercion/parameter-coercion parameter-coercion
     ::coercion/extract-request-format extract-request-format
@@ -111,6 +114,7 @@
     :data {:compile coercion/compile-request-coercers
            :coercion reitit.coercion.spec/coercion
            :middleware [rf/wrap-restful-format
+                        macchiato.middleware.params/wrap-params
                         exception-middleware
                         rcoercion/coerce-response-middleware
                         sync-exception-middleware ;; coerce-request-middleware can throw exception on invalid data
