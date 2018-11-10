@@ -4,7 +4,8 @@
         macchiato/core {:mvn/version "0.2.14"}
         macchiato/env {:mvn/version "0.0.6"}
         macchiato/migrations {:mvn/version "0.0.5"}
-        metosin/reitit {:mvn/version "0.2.3"}
+        metosin/reitit {:mvn/version "0.2.6"}
+        metosin/spec-tools {:mvn/spec-tools "0.8.2"}
         mount {:mvn/version "0.1.14"}
         honeysql {:mvn/version "0.9.4"}
         nilenso/honeysql-postgres {:mvn/version "0.2.4"}
