@@ -1,11 +1,11 @@
 {:paths ["src"]
  :deps {org.clojure/clojure {:mvn/version "1.9.0"}
-        org.clojure/clojurescript {:mvn/version "1.10.339"}
+        org.clojure/clojurescript {:mvn/version "1.10.439"}
         macchiato/core {:mvn/version "0.2.14"}
         macchiato/env {:mvn/version "0.0.6"}
         macchiato/migrations {:mvn/version "0.0.5"}
-        metosin/reitit {:mvn/version "0.2.2"}
-        mount {:mvn/version "0.1.13"}
+        metosin/reitit {:mvn/version "0.2.3"}
+        mount {:mvn/version "0.1.14"}
         honeysql {:mvn/version "0.9.4"}
         nilenso/honeysql-postgres {:mvn/version "0.2.4"}
         com.taoensso/timbre {:mvn/version "4.10.0"}
@@ -17,4 +17,4 @@
                                   :sha "51f85c9d6cc67107620749ceacd46120647fe107"}}}
            :cljfmt/check {:main-opts ["-m" "cljfmt-runner.check"]}
            :cljfmt/fix {:main-opts ["-m" "cljfmt-runner.fix"]}
-           :server.build/dev {:main-opts ["-m" "figwheel.main" "-b" "server-dev" "-r"]}}}
+           :server.build/dev {:main-opts ["-m" "figwheel.main" "-b" "dev" "-r"]}}}

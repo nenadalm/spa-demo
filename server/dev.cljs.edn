@@ -5,6 +5,7 @@
  :output-to "target/out/app.js"
  :output-dir "target/out"
  :target :nodejs
+ :npm-deps {}
  :optimizations :none
  :pretty-print true
  :source-map true

@@ -12,12 +12,6 @@
 (timbre/merge-config!
  {:appenders {:sentry (sentry-appender (:sentry-dsn @env))}})
 
-;; https://github.com/metosin/spec-tools/pull/130
-(extend-type st/Spec
-  IKVReduce
-  (-kv-reduce [coll f init]
-    (reduce-kv f init (into {} coll))))
-
 (defn server []
   (migrations/migrate
    (fn []

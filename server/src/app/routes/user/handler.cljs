@@ -41,6 +41,7 @@
                    :handler (fn [req res raise]
                               (-> (q/create (get-in req [:parameters :body :data :attributes]))
                                   (.then (fn [result]
+                                           ;; TODO: response gets stuck somewhere since reitit 0.2.4 (tested also with 0.2.6)
                                            (res
                                             {:status 201
                                              :headers {}
