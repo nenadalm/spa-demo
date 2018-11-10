@@ -42,6 +42,7 @@
                               (-> (q/create (get-in req [:parameters :body :data :attributes]))
                                   (.then (fn [result]
                                            ;; TODO: response gets stuck somewhere since reitit 0.2.4 (tested also with 0.2.6)
+                                           ;; (https://github.com/metosin/spec-tools/issues/145)
                                            (res
                                             {:status 201
                                              :headers {}
