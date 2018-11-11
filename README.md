@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 # SPA-DEMO
 
 This repository serves as example for making single page applications. It is in very early stage.
