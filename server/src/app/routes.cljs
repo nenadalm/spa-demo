@@ -75,7 +75,6 @@
 (defn exception-middleware [handler]
   (fn [req res _]
     (let [raise (fn [e]
-                  (prn e)
                   (if (request-coercion-error? e)
                     (res {:status 400
                           :body (phrase-errors e)})
@@ -90,6 +89,7 @@
    [["/swagger.json"
      {:get {:no-doc true
             :swagger {:info {:title "spa demo"}}
+            ;; todo: update after https://github.com/metosin/reitit/pull/174 is merged
             :handler (sync-handler->async-handler (swagger/create-swagger-handler))}}]
     ["/config.js"
      {:get {:no-doc true
