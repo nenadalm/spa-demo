@@ -6,7 +6,8 @@
 (s/def :parameters/greeter (s/keys :req-un [:parameters.greeter/name]))
 
 (def routes
-  ["/greeter" {:get {:responses {200 {:body string?}}
+  ["/greeter" {:get {:tags [:greeter]
+                     :responses {200 {:body string?}}
                      :parameters {:query :parameters/greeter}
                      :handler (fn [req res raise]
                                 (res {:status 200

@@ -85,13 +85,6 @@
         (catch :default e
           (raise e))))))
 
-(defn sync-exception-middleware [handler]
-  (fn [req res raise]
-    (try
-      (handler req res raise)
-      (catch :default e
-        (raise e)))))
-
 (defn create-router []
   (ring/router
    [["/swagger.json"
@@ -117,7 +110,6 @@
                         macchiato.middleware.params/wrap-params
                         exception-middleware
                         rcoercion/coerce-response-middleware
-                        sync-exception-middleware ;; coerce-request-middleware can throw exception on invalid data
                         rcoercion/coerce-request-middleware]}}))
 
 (defn create-handler []

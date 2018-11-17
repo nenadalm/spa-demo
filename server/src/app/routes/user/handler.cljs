@@ -27,7 +27,8 @@
    :attributes {:name (:name row)}})
 
 (def routes
-  ["/user" {:get {:responses {200 {:body :response/user-list}}
+  ["/user" {:get {:tags [:user]
+                  :responses {200 {:body :response/user-list}}
                   :handler (fn [req res raise]
                              (-> (q/list)
                                  (.then (fn [result]
@@ -35,7 +36,8 @@
                                                 :headers {}
                                                 :body {:data (map user-row->response-data
                                                                   result)}})))))}
-            :post {:responses {201 {:body :response/user}
+            :post {:tags [:user]
+                   :responses {201 {:body :response/user}
                                400 {:body :response/error-list}}
                    :parameters {:body :request/user-create}
                    :handler (fn [req res raise]
