@@ -77,7 +77,7 @@
      :source {:pointer path}}))
 
 (defn phrase-errors [e]
-  (let [problems (-> e .-data :problems)]
+  (let [problems (-> e .-data :problems ::s/problems)]
     (map problem->error problems)))
 
 (defn exception-middleware [handler]

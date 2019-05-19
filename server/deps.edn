@@ -1,18 +1,17 @@
 {:paths ["src"]
- :deps {org.clojure/clojure {:mvn/version "1.9.0"}
-        org.clojure/clojurescript {:mvn/version "1.10.439"}
+ :deps {org.clojure/clojure {:mvn/version "1.10.0"}
+        org.clojure/clojurescript {:mvn/version "1.10.520"}
         macchiato/core {:mvn/version "0.2.14"}
         macchiato/env {:mvn/version "0.0.6"}
         macchiato/migrations {:mvn/version "0.0.5"}
-        metosin/reitit {:mvn/version "0.2.6"}
-        metosin/spec-tools {:mvn/version "0.8.2"}
-        mount {:mvn/version "0.1.14"}
+        metosin/reitit {:mvn/version "0.3.3"}
+        mount {:mvn/version "0.1.16"}
         honeysql {:mvn/version "0.9.4"}
-        nilenso/honeysql-postgres {:mvn/version "0.2.4"}
+        nilenso/honeysql-postgres {:mvn/version "0.2.5"}
         com.taoensso/timbre {:mvn/version "4.10.0"}
-        org.clojure/test.check {:mvn/version "0.10.0-alpha2"}
+        org.clojure/test.check {:mvn/version "0.10.0-alpha4"}
         phrase {:mvn/version "0.3-alpha4"}
-        com.bhauman/figwheel-main {:mvn/version "0.1.9"}}
+        com.bhauman/figwheel-main {:mvn/version "0.2.0"}}
  :aliases {:cljfmt {:extra-deps {com.jameslaverack/cljfmt-runner
                                  {:git/url "https://github.com/JamesLaverack/cljfmt-runner"
                                   :sha "51f85c9d6cc67107620749ceacd46120647fe107"}}}
