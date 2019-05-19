@@ -1,5 +1,7 @@
 ^{:watch-dirs ["src"]
   :open-url false
+  :launch-node false
+  :cljs-devtools true
   :ring-server-options {:port 9501}}
 {:main app.core
  :output-to "target/out/app.js"

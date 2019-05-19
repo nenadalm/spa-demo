@@ -51,6 +51,14 @@
 (defn extract-response-format [_ _]
   :json)
 
+(defmethod rf/serialize-response "application/edn"
+  [{:keys [body]}]
+  (pr-str body))
+
+(defmethod rf/deserialize-request "application/edn"
+  [{:keys [body]}]
+  (cljs.reader/read-string (.toString body)))
+
 (def parameter-coercion
   (assoc coercion/default-parameter-coercion
          :body (coercion/map->ParameterCoercion {:in :body
@@ -84,11 +92,17 @@
         (catch :default e
           (raise e))))))
 
+(def accept-types (conj rf/default-accept-types "application/edn"))
+
+(def content-types (conj rf/default-content-types "application/edn"))
+
 (defn create-router []
   (ring/router
    [["/swagger.json"
      {:get {:no-doc true
-            :swagger {:info {:title "spa demo"}}
+            :swagger {:info {:title "spa demo"}
+                      :consumes content-types
+                      :produces accept-types}
             ;; todo: update after https://github.com/metosin/reitit/pull/174 is merged
             :handler (sync-handler->async-handler (swagger/create-swagger-handler))}}]
     ["/config.js"
@@ -106,7 +120,8 @@
     ::coercion/extract-response-format extract-response-format
     :data {:compile coercion/compile-request-coercers
            :coercion reitit.coercion.spec/coercion
-           :middleware [rf/wrap-restful-format
+           :middleware [#(rf/wrap-restful-format % {:accept-types accept-types
+                                                    :content-types content-types})
                         macchiato.middleware.params/wrap-params
                         exception-middleware
                         rcoercion/coerce-response-middleware
